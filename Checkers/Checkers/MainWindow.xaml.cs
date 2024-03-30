@@ -8,6 +8,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Checkers;
+using Checkers.View;
+
 
 namespace Checkers
 {
@@ -19,6 +22,10 @@ namespace Checkers
         public MainWindow()
         {
             InitializeComponent();
+            this.Height = 720;
+            this.Width = 1100;
+            MainFrame.Navigate(new Game());
+            MainFrame.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Hidden;
         }
     }
 }

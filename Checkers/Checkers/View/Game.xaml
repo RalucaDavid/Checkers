@@ -5,10 +5,70 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Checkers.View"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
       Title="Game">
 
-    <Grid>
-        
+    <Grid Width="1100">
+        <Grid.Background>
+            <ImageBrush ImageSource="/View/Background.jpg"/>
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition Height="200"></RowDefinition>
+            <RowDefinition Height="200"></RowDefinition>
+            <RowDefinition Height="200"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"></ColumnDefinition>
+            <ColumnDefinition Width="150"></ColumnDefinition>
+            <ColumnDefinition Width="200"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Menu Background="White" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5">
+            <MenuItem Header="File">
+                <MenuItem Header="New Game" Command="{Binding Path=NewGame}" CommandParameter="{Binding ElementName=GameGrid}"></MenuItem>
+                <MenuItem Header="Open Game" Command="{Binding Path=OpenGame}"></MenuItem>
+                <MenuItem Header="Save Game" Command="{Binding Path=SaveGame}"></MenuItem>
+                <MenuItem Header="Statistics" Command="{Binding Path=ShowStatistics}"></MenuItem>
+                <MenuItem Header="Exit" Command="{Binding Path=CloseGame}"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Configuration">
+                <MenuItem Header="King Piece" Command="{Binding Path=ChooseKingPiece}"></MenuItem>
+                <MenuItem Header="Few Pieces" Command="{Binding Path=ChooseFewPieces}"></MenuItem>
+                <MenuItem Header="King Piece after Multiple Jump" Command="{Binding Path=ChooseKingPieceMultipleJump}"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Help">
+                <MenuItem Header="About" Command="{Binding Path=About}"></MenuItem>
+            </MenuItem>
+        </Menu>
+        <Grid x:Name="Board" RenderTransformOrigin="4.5,6.25" Grid.ColumnSpan="3" Margin="60,55,385,35" Grid.RowSpan="3" Grid.Column="1" Grid.Row="1">
+            <Grid.Background>
+                <ImageBrush ImageSource="/View/Board.jpg"/>
+            </Grid.Background>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="52"></RowDefinition>
+                <RowDefinition Height="52"></RowDefinition>
+                <RowDefinition Height="52"></RowDefinition>
+                <RowDefinition Height="52"></RowDefinition>
+                <RowDefinition Height="52"></RowDefinition>
+                <RowDefinition Height="52"></RowDefinition>
+                <RowDefinition Height="52"></RowDefinition>
+                <RowDefinition Height="52"></RowDefinition>
+                <RowDefinition Height="52"></RowDefinition>
+                <RowDefinition Height="52"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="64"></ColumnDefinition>
+                <ColumnDefinition Width="64"></ColumnDefinition>
+                <ColumnDefinition Width="64"></ColumnDefinition>
+                <ColumnDefinition Width="64"></ColumnDefinition>
+                <ColumnDefinition Width="64"></ColumnDefinition>
+                <ColumnDefinition Width="64"></ColumnDefinition>
+                <ColumnDefinition Width="64"></ColumnDefinition>
+                <ColumnDefinition Width="64"></ColumnDefinition>
+                <ColumnDefinition Width="64"></ColumnDefinition>
+                <ColumnDefinition Width="64"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+        </Grid>
     </Grid>
 </Page>
