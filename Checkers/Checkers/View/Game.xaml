@@ -33,6 +33,7 @@
                 <MenuItem Header="Exit" Command="{Binding Path=CloseGame}"></MenuItem>
             </MenuItem>
             <MenuItem Header="Configuration">
+                <MenuItem Header="Allow Multiple Jump" Command="{Binding Path=ChooseMultipleJump}"></MenuItem>
                 <MenuItem Header="King Piece" Command="{Binding Path=ChooseKingPiece}"></MenuItem>
                 <MenuItem Header="Few Pieces" Command="{Binding Path=ChooseFewPieces}"></MenuItem>
                 <MenuItem Header="King Piece after Multiple Jump" Command="{Binding Path=ChooseKingPieceMultipleJump}"></MenuItem>
