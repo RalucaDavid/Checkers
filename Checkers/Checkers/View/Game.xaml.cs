@@ -20,9 +20,10 @@ namespace Checkers.View
     /// </summary>
     public partial class Game : Page
     {
-        public Game()
+        public Game(object dContext)
         {
             InitializeComponent();
+            DataContext = dContext;
         }
     }
 }

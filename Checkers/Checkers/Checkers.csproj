@@ -16,7 +16,6 @@
   <ItemGroup>
     <Folder Include="Resources\Data\" />
     <Folder Include="Resources\Images\" />
-    <Folder Include="ViewModel\" />
   </ItemGroup>
 
   <ItemGroup>

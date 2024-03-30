@@ -3,11 +3,11 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Checkers.View"
+      xmlns:local="clr-namespace:Checkers.ViewModel"
       mc:Ignorable="d" 
       Title="Game">
 
-    <Grid Width="1100">
+    <Grid Width="1100" Height = "720">
         <Grid.Background>
             <ImageBrush ImageSource="/View/Background.jpg"/>
         </Grid.Background>
@@ -26,7 +26,7 @@
         </Grid.ColumnDefinitions>
         <Menu Background="White" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5">
             <MenuItem Header="File">
-                <MenuItem Header="New Game" Command="{Binding Path=NewGame}" CommandParameter="{Binding ElementName=GameGrid}"></MenuItem>
+                <MenuItem Header="New Game" Command="{Binding Path=NewGame}" CommandParameter="{Binding ElementName=Game}"></MenuItem>
                 <MenuItem Header="Open Game" Command="{Binding Path=OpenGame}"></MenuItem>
                 <MenuItem Header="Save Game" Command="{Binding Path=SaveGame}"></MenuItem>
                 <MenuItem Header="Statistics" Command="{Binding Path=ShowStatistics}"></MenuItem>
@@ -41,33 +41,33 @@
                 <MenuItem Header="About" Command="{Binding Path=About}"></MenuItem>
             </MenuItem>
         </Menu>
-        <Grid x:Name="Board" RenderTransformOrigin="4.5,6.25" Grid.ColumnSpan="3" Margin="60,55,385,35" Grid.RowSpan="3" Grid.Column="1" Grid.Row="1">
+        <Grid x:Name="Board" RenderTransformOrigin="4.5,6.25" Grid.ColumnSpan="3" Margin="60,60,360,0" Grid.RowSpan="3" Grid.Column="1" Grid.Row="1">
             <Grid.Background>
                 <ImageBrush ImageSource="/View/Board.jpg"/>
             </Grid.Background>
             <Grid.RowDefinitions>
-                <RowDefinition Height="52"></RowDefinition>
-                <RowDefinition Height="52"></RowDefinition>
-                <RowDefinition Height="52"></RowDefinition>
-                <RowDefinition Height="52"></RowDefinition>
-                <RowDefinition Height="52"></RowDefinition>
-                <RowDefinition Height="52"></RowDefinition>
-                <RowDefinition Height="52"></RowDefinition>
-                <RowDefinition Height="52"></RowDefinition>
-                <RowDefinition Height="52"></RowDefinition>
-                <RowDefinition Height="52"></RowDefinition>
+                <RowDefinition Height="54"></RowDefinition>
+                <RowDefinition Height="54"></RowDefinition>
+                <RowDefinition Height="54"></RowDefinition>
+                <RowDefinition Height="54"></RowDefinition>
+                <RowDefinition Height="54"></RowDefinition>
+                <RowDefinition Height="54"></RowDefinition>
+                <RowDefinition Height="54"></RowDefinition>
+                <RowDefinition Height="54"></RowDefinition>
+                <RowDefinition Height="54"></RowDefinition>
+                <RowDefinition Height="54"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="64"></ColumnDefinition>
-                <ColumnDefinition Width="64"></ColumnDefinition>
-                <ColumnDefinition Width="64"></ColumnDefinition>
-                <ColumnDefinition Width="64"></ColumnDefinition>
-                <ColumnDefinition Width="64"></ColumnDefinition>
-                <ColumnDefinition Width="64"></ColumnDefinition>
-                <ColumnDefinition Width="64"></ColumnDefinition>
-                <ColumnDefinition Width="64"></ColumnDefinition>
-                <ColumnDefinition Width="64"></ColumnDefinition>
-                <ColumnDefinition Width="64"></ColumnDefinition>
+                <ColumnDefinition Width="66"></ColumnDefinition>
+                <ColumnDefinition Width="66"></ColumnDefinition>
+                <ColumnDefinition Width="66"></ColumnDefinition>
+                <ColumnDefinition Width="66"></ColumnDefinition>
+                <ColumnDefinition Width="66"></ColumnDefinition>
+                <ColumnDefinition Width="66"></ColumnDefinition>
+                <ColumnDefinition Width="66"></ColumnDefinition>
+                <ColumnDefinition Width="66"></ColumnDefinition>
+                <ColumnDefinition Width="66"></ColumnDefinition>
+                <ColumnDefinition Width="66"></ColumnDefinition>
             </Grid.ColumnDefinitions>
         </Grid>
     </Grid>
