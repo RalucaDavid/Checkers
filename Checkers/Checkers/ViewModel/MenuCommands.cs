@@ -64,13 +64,24 @@ namespace Checkers.ViewModel
                     image.Source = new BitmapImage(new Uri(imagePath, UriKind.Absolute));
                     Grid.SetRow(image, piece.Coordinates.Item1);
                     Grid.SetColumn(image, piece.Coordinates.Item2);
+                    image.MouseLeftButtonDown += ClickMouseLeftButtonDown;
                     grid.Children.Add(image);
                 }
             }
         }
+        private void ClickMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Image clickedImage = sender as Image;
+            if (clickedImage != null)
+            {
+                int row = Grid.GetRow(clickedImage);
+                int column = Grid.GetColumn(clickedImage);
+                //MessageBox.Show($"{row},{column}");
+                
+            }
+        }
         private string GetImagePath(PieceType type, ColorType color)
         {
-            //C:\Users\Raluca David\Desktop\Portofoliu\Checkers\Checkers\Checkers\Resources\Images\PieceWhiteSimple.png
             string basePath = AppDomain.CurrentDomain.BaseDirectory;
             string directoryPath = Path.GetFullPath(Path.Combine(basePath, "..\\..\\..\\Resources\\Images"));
             string colorString = color == ColorType.White ? "White" : "Red";

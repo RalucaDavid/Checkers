@@ -71,5 +71,11 @@
                 <ColumnDefinition Width="66"></ColumnDefinition>
             </Grid.ColumnDefinitions>
         </Grid>
+        <Label x:Name="Round" Content="{Binding Round}" FontSize="30" RenderTransformOrigin="3,3.5" Margin="440,60,40,90" Grid.Column="3" Grid.Row="1" Background="White"/>
+        <Label Content="Remaining Red Pieces:" FontSize="18" RenderTransformOrigin="3,3.5" Margin="440,140,100,25" Grid.Column="3" Grid.Row="1" Background="White"/>
+        <Label Content="Remaining White Pieces:" FontSize="18" RenderTransformOrigin="3,3.5" Margin="440,0,85,165" Grid.Column="3" Grid.Row="2" Background="White"/>
+        <Label Content="{Binding NumberPiecesRed}" FontSize="18" RenderTransformOrigin="3,3.5" Margin="660,140,40,25" Grid.Column="3" Grid.Row="1" Background="White"/>
+        <Label Content="{Binding NumberPiecesWhite}" FontSize="18" RenderTransformOrigin="3,3.5" Margin="660,0,40,165" Grid.Column="3" Grid.Row="2" Background="White"/>
+
     </Grid>
 </Page>

@@ -8,5 +8,18 @@ namespace Checkers.Model
 {
     internal class Player
     {
+        private ColorType color;
+        public Player()
+        { 
+            /*empty*/
+        }
+        public void PickPiece()
+        {
+
+        }
+        public void PlacePiece()
+        {
+
+        }
     }
 }
