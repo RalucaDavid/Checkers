@@ -1,18 +1,23 @@
-﻿using System;
+﻿using Checkers.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace Checkers.ViewModel
 {
     class MenuCommands : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+        private Game game;
         private ICommand newGame;
         private ICommand closeGame;
         private ICommand saveGame;
@@ -46,6 +51,33 @@ namespace Checkers.ViewModel
                 "Checkers involves strategy in the placement and movement of pieces, as well as anticipating the opponent's " +
                 "moves. It's a game that combines elements of strategic and tactical calculation, providing an engaging experience for players of all ages.");
         }
+        public void CheckersNewGame(object parameter)
+        {
+            game = new Game();
+            Grid grid = parameter as Grid;
+            if ((grid != null) && (game != null) && (game.Board != null)&&(game.Board.Pieces!=null))
+            {
+                foreach (var piece in game.Board.Pieces)
+                {
+                    var image = new Image();
+                    string imagePath = GetImagePath(piece.Type, piece.Color);
+                    image.Source = new BitmapImage(new Uri(imagePath, UriKind.Absolute));
+                    Grid.SetRow(image, piece.Coordinates.Item1);
+                    Grid.SetColumn(image, piece.Coordinates.Item2);
+                    grid.Children.Add(image);
+                }
+            }
+        }
+        private string GetImagePath(PieceType type, ColorType color)
+        {
+            //C:\Users\Raluca David\Desktop\Portofoliu\Checkers\Checkers\Checkers\Resources\Images\PieceWhiteSimple.png
+            string basePath = AppDomain.CurrentDomain.BaseDirectory;
+            string directoryPath = Path.GetFullPath(Path.Combine(basePath, "..\\..\\..\\Resources\\Images"));
+            string colorString = color == ColorType.White ? "White" : "Red";
+            string typeString = type == PieceType.Simple ? "Simple" : "King";
+            return Path.Combine(directoryPath, $"Piece{colorString}{typeString}.png");
+        }
+
         public ICommand About
         {
             get
@@ -55,6 +87,15 @@ namespace Checkers.ViewModel
                     about = new RelayCommand(ShowAbout);
                 }
                 return about;
+            }
+        }
+        public ICommand NewGame
+        {
+            get
+            {
+                if (newGame == null)
+                    newGame = new RelayCommand(CheckersNewGame);
+                return newGame;
             }
         }
     }
