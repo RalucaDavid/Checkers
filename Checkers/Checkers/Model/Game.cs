@@ -55,8 +55,6 @@ namespace Checkers.Model
             Board = new Board();
             Player1 = new Player();
             Player2 = new Player();
-
-            Board.Initialize();
         }
         public event PropertyChangedEventHandler PropertyChanged;
 
