@@ -13,13 +13,5 @@ namespace Checkers.Model
         { 
             /*empty*/
         }
-        public void PickPiece()
-        {
-
-        }
-        public void PlacePiece()
-        {
-
-        }
     }
 }

@@ -76,8 +76,7 @@ namespace Checkers.ViewModel
             {
                 int row = Grid.GetRow(clickedImage);
                 int column = Grid.GetColumn(clickedImage);
-                //MessageBox.Show($"{row},{column}");
-                
+                MessageBox.Show($"{row},{column}");
             }
         }
         private string GetImagePath(PieceType type, ColorType color)

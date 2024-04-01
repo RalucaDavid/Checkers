@@ -58,12 +58,6 @@ namespace Checkers.Model
 
             Board.Initialize();
         }
-
-        public void Run()
-        {
-
-        }
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void NotifyPropertyChanged(string propertyName)
