@@ -22,7 +22,6 @@ namespace Checkers.Model
                 }
             }
         }
-
         private ColorType color;
         public ColorType Color
         {
@@ -36,7 +35,6 @@ namespace Checkers.Model
                 }
             }
         }
-
         private Tuple<int, int> coordinates;
         public Tuple<int, int> Coordinates
         {
@@ -50,7 +48,6 @@ namespace Checkers.Model
                 }
             }
         }
-
         public Piece()
         {
             color = ColorType.None;

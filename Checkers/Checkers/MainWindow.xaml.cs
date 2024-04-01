@@ -10,6 +10,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Checkers;
 using Checkers.View;
+using Checkers.ViewModel;
 
 
 namespace Checkers
