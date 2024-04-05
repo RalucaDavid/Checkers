@@ -42,7 +42,7 @@
                 <MenuItem Header="About" Command="{Binding Path=About}"></MenuItem>
             </MenuItem>
         </Menu>
-        <Grid x:Name="BoardGrid" RenderTransformOrigin="4.5,6.25" Grid.ColumnSpan="3" Margin="60,60,360,0" Grid.RowSpan="3" Grid.Column="1" Grid.Row="1">
+        <Grid x:Name="BoardGrid" MouseDown="BoardGrid_MouseDown" RenderTransformOrigin="4.5,6.25" Grid.ColumnSpan="3" Margin="60,60,360,0" Grid.RowSpan="3" Grid.Column="1" Grid.Row="1">
             <ItemsControl ItemsSource="{Binding Game.Board.Pieces}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>

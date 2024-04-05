@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Checkers.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,6 +25,13 @@ namespace Checkers.View
         {
             InitializeComponent();
             DataContext = dContext;
+        }
+        private void BoardGrid_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (DataContext is MenuCommands menuCommands)
+            {
+                menuCommands.OnMouseDownOnBoard(sender, e);
+            }
         }
     }
 }

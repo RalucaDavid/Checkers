@@ -21,7 +21,10 @@ namespace Checkers.ViewModel
     class MenuCommands : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+        public event MouseButtonEventHandler MouseDownOnBoard;
         private Game game;
+        private List<Tuple<int, int>> validMoves;
+        private Piece currentPiece;
         public Game Game
         {
             get { return game; }
@@ -35,17 +38,26 @@ namespace Checkers.ViewModel
                 }
             }
         }
-        private List<Tuple<int, int>> validMoves;
         private ICommand newGame;
         private ICommand closeGame;
         private ICommand saveGame;
         private ICommand openGame;
         private ICommand showStatistics;
         private ICommand about;
-        private ICommand pieceClicked;
         public MenuCommands()
         {
             /*empty*/
+        }
+        public void OnMouseDownOnBoard(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                MessageBox.Show("Sal");
+            }
+            if(e.RightButton == MouseButtonState.Pressed)
+            {
+                MessageBox.Show("cf");
+            }
         }
         private void OnPropertyChanged(string propertyName)
         {
@@ -134,10 +146,6 @@ namespace Checkers.ViewModel
                 return Path.Combine(directoryPath, $"Piece{colorString}{typeString}.png");
             }
         }
-        private void ClickOnBoard(object parameter)
-        {
-            MessageBox.Show("Sal");
-        }
         public ICommand About
         {
             get
@@ -156,15 +164,6 @@ namespace Checkers.ViewModel
                 if (newGame == null)
                     newGame = new RelayCommand(CheckersNewGame);
                 return newGame;
-            }
-        }
-        public ICommand PieceClicked
-        {
-            get
-            {
-                if (pieceClicked== null)
-                    pieceClicked = new RelayCommand(ClickOnBoard);
-                return pieceClicked;
             }
         }
         public void ShowAbout(object parameter)
