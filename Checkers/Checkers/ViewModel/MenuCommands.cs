@@ -1,11 +1,14 @@
 ﻿using Checkers.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data.Common;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -19,15 +22,27 @@ namespace Checkers.ViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
         private Game game;
+        public Game Game
+        {
+            get { return game; }
+            set
+            {
+                if (game != value)
+                {
+                    game = value;
+                    OnPropertyChanged(nameof(Game));
+                    OnPropertyChanged(nameof(Board));
+                }
+            }
+        }
         private List<Tuple<int, int>> validMoves;
-        private Piece currentPiece = null;
         private ICommand newGame;
         private ICommand closeGame;
         private ICommand saveGame;
         private ICommand openGame;
         private ICommand showStatistics;
         private ICommand about;
-        private ICommand cellClicked;
+        private ICommand pieceClicked;
         public MenuCommands()
         {
             /*empty*/
@@ -39,49 +54,49 @@ namespace Checkers.ViewModel
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+        public void InitializeBoard()
+        {
+            for(int col=0;col<8;col++)
+            {
+                ObservableCollection<Piece> colPices = new ObservableCollection<Piece>();
+                for(int row=0;row<8;row++)
+                {
+                    Piece piece;
+                    if (((row==0)||(row==2))&&(col%2==1))
+                    {
+                        piece = new Piece(PieceType.Simple,ColorType.White, GetImagePath(PieceType.Simple,ColorType.White,row,col));
+                    }
+                    else if((row==1)&&(col%2==0))
+                    {
+                        piece = new Piece(PieceType.Simple, ColorType.White, GetImagePath(PieceType.Simple, ColorType.White,row,col));
+                    }
+                    else if(((row==5)||(row==7))&&(col%2==0))
+                    {
+                        piece = new Piece(PieceType.Simple, ColorType.Red, GetImagePath(PieceType.Simple, ColorType.Red, row, col));
+                    }
+                    else if((row==6)&&(col%2==1))
+                    {
+                        piece = new Piece(PieceType.Simple, ColorType.Red, GetImagePath(PieceType.Simple, ColorType.Red,row,col));
+                    }
+                    else
+                    {
+                        piece = new Piece(PieceType.None, ColorType.None, GetImagePath(PieceType.None, ColorType.None, row, col));
+                    }
+                    colPices.Add(piece);
+                }
+                game.Board.Pieces.Add(colPices);
+            }
+            OnPropertyChanged("Game");
+        }
         public void CheckersNewGame(object parameter)
         {
             game = new Game();
-            Grid grid = parameter as Grid;
-            if ((grid != null) && (game != null) && (game.Board != null) && (game.Board.Pieces != null))
-            {
-                for (int index=1;index<=8;index++)
-                {
-                    for(int jndex=1;jndex<=8;jndex++)
-                    {
-                        var image = new Image();
-                        string imagePath = GetImagePath(PieceType.None, ColorType.None);
-                        image.Source = new BitmapImage(new Uri(imagePath, UriKind.Absolute));
-                        Grid.SetRow(image, index);
-                        Grid.SetColumn(image, jndex);
-                        image.MouseLeftButtonDown += ClickMouseLeftButtonDown;
-                        grid.Children.Add(image);
-                    }
-                }
-                foreach (var piece in game.Board.Pieces)
-                {
-                    var image = new Image();
-                    string imagePath = GetImagePath(piece.Type, piece.Color);
-                    image.Source = new BitmapImage(new Uri(imagePath, UriKind.Absolute));
-                    Grid.SetRow(image, piece.Coordinates.Item1);
-                    Grid.SetColumn(image, piece.Coordinates.Item2);
-                    image.MouseLeftButtonDown += ClickMouseLeftButtonDown;
-                    grid.Children.Add(image);
-                }
-            }
+            InitializeBoard();
         }
         public Piece FindPieceByCoordonates(int row, int column)
         {
-            foreach (var piece in game.Board.Pieces)
-            {
-                if(piece.Coordinates.Item1==row && piece.Coordinates.Item2==column)
-                {
-                    return piece; 
-                }
-            }
             return null;
         }
-
         public List<Tuple<int,int>> ValidMoves(int row, int column)
         {
             List < Tuple<int, int> > possibleMoves = new List<Tuple<int, int>>();
@@ -95,28 +110,22 @@ namespace Checkers.ViewModel
             }
             return possibleMoves;
         }
-        private void ClickMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void ExecutePieceClicked(object parameter)
         {
-            Image clickedImage = sender as Image;
-            if (clickedImage != null)
+            if (parameter is Piece piece)
             {
-                int row = Grid.GetRow(clickedImage);
-                int column = Grid.GetColumn(clickedImage);
-                currentPiece = FindPieceByCoordonates(row, column);
-                if (currentPiece != null)
-                {
-                    validMoves = ValidMoves(row, column);
-                    MessageBox.Show("cf");
-                }
+                MessageBox.Show($"Piece clicked: {piece.Type}, Color: {piece.Color}");
             }
         }
-        private string GetImagePath(PieceType type, ColorType color)
+        private string GetImagePath(PieceType type, ColorType color, int row, int col)
         {
             string basePath = AppDomain.CurrentDomain.BaseDirectory;
             string directoryPath = Path.GetFullPath(Path.Combine(basePath, "..\\..\\..\\Resources\\Images"));
             if ((color == ColorType.None) && (type == PieceType.None))
             {
-                return Path.Combine(directoryPath, $"None.png");
+                if(col%2==row%2)
+                    return Path.Combine(directoryPath, $"WhiteSquare.png");
+                return Path.Combine(directoryPath, $"BlackSquare.png");
             }
             else
             {
@@ -124,6 +133,10 @@ namespace Checkers.ViewModel
                 string typeString = type == PieceType.Simple ? "Simple" : "King";
                 return Path.Combine(directoryPath, $"Piece{colorString}{typeString}.png");
             }
+        }
+        private void ClickOnBoard(object parameter)
+        {
+            MessageBox.Show("Sal");
         }
         public ICommand About
         {
@@ -143,6 +156,15 @@ namespace Checkers.ViewModel
                 if (newGame == null)
                     newGame = new RelayCommand(CheckersNewGame);
                 return newGame;
+            }
+        }
+        public ICommand PieceClicked
+        {
+            get
+            {
+                if (pieceClicked== null)
+                    pieceClicked = new RelayCommand(ClickOnBoard);
+                return pieceClicked;
             }
         }
         public void ShowAbout(object parameter)

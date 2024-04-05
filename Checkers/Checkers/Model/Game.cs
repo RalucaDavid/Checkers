@@ -10,42 +10,42 @@ namespace Checkers.Model
 {
     internal class Game : INotifyPropertyChanged
     {
-        private Board _board;
+        private Board board;
         public Board Board
         {
-            get { return _board; }
+            get { return board; }
             set
             {
-                if (_board != value)
+                if (board != value)
                 {
-                    _board = value;
+                    board = value;
                     NotifyPropertyChanged(nameof(Board));
                 }
             }
         }
-        private Player _player1;
+        private Player player1;
         public Player Player1
         {
-            get { return _player1; }
+            get { return player1; }
             set
             {
-                if (_player1 != value)
+                if (player1 != value)
                 {
-                    _player1 = value;
+                    player1 = value;
                     NotifyPropertyChanged(nameof(Player1));
                 }
             }
         }
 
-        private Player _player2;
+        private Player player2;
         public Player Player2
         {
-            get { return _player2; }
+            get { return player2; }
             set
             {
-                if (_player2 != value)
+                if (player2 != value)
                 {
-                    _player2 = value;
+                    player2 = value;
                     NotifyPropertyChanged(nameof(Player2));
                 }
             }
@@ -55,8 +55,6 @@ namespace Checkers.Model
             Board = new Board();
             Player1 = new Player();
             Player2 = new Player();
-
-            Board.Initialize();
         }
         public event PropertyChangedEventHandler PropertyChanged;
 

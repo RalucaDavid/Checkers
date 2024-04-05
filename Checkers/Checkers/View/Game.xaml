@@ -26,7 +26,7 @@
         </Grid.ColumnDefinitions>
         <Menu Background="White" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5">
             <MenuItem Header="File">
-                <MenuItem Header="New Game" Command="{Binding Path=NewGame}" CommandParameter="{Binding ElementName=BoardGrid}"></MenuItem>
+                <MenuItem Header="New Game" Command="{Binding Path=NewGame}"></MenuItem>
                 <MenuItem Header="Open Game" Command="{Binding Path=OpenGame}"></MenuItem>
                 <MenuItem Header="Save Game" Command="{Binding Path=SaveGame}"></MenuItem>
                 <MenuItem Header="Statistics" Command="{Binding Path=ShowStatistics}"></MenuItem>
@@ -43,33 +43,29 @@
             </MenuItem>
         </Menu>
         <Grid x:Name="BoardGrid" RenderTransformOrigin="4.5,6.25" Grid.ColumnSpan="3" Margin="60,60,360,0" Grid.RowSpan="3" Grid.Column="1" Grid.Row="1">
-            <Grid.Background>
-                <ImageBrush ImageSource="/View/Board.jpg"/>
-            </Grid.Background>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="54"></RowDefinition>
-                <RowDefinition Height="54"></RowDefinition>
-                <RowDefinition Height="54"></RowDefinition>
-                <RowDefinition Height="54"></RowDefinition>
-                <RowDefinition Height="54"></RowDefinition>
-                <RowDefinition Height="54"></RowDefinition>
-                <RowDefinition Height="54"></RowDefinition>
-                <RowDefinition Height="54"></RowDefinition>
-                <RowDefinition Height="54"></RowDefinition>
-                <RowDefinition Height="54"></RowDefinition>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="66"></ColumnDefinition>
-                <ColumnDefinition Width="66"></ColumnDefinition>
-                <ColumnDefinition Width="66"></ColumnDefinition>
-                <ColumnDefinition Width="66"></ColumnDefinition>
-                <ColumnDefinition Width="66"></ColumnDefinition>
-                <ColumnDefinition Width="66"></ColumnDefinition>
-                <ColumnDefinition Width="66"></ColumnDefinition>
-                <ColumnDefinition Width="66"></ColumnDefinition>
-                <ColumnDefinition Width="66"></ColumnDefinition>
-                <ColumnDefinition Width="66"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
+            <ItemsControl ItemsSource="{Binding Game.Board.Pieces}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="8" Rows="8" Margin="-2"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <ItemsControl ItemsSource="{Binding}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid Columns="1" Rows="1"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Image Source="{Binding ImagePath}" Width="85" Height="85"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </Grid>
         <Label x:Name="Round" Content="{Binding Round}" FontSize="30" RenderTransformOrigin="3,3.5" Margin="440,60,40,90" Grid.Column="3" Grid.Row="1" Background="White"/>
         <Label Content="Remaining Red Pieces:" FontSize="18" RenderTransformOrigin="3,3.5" Margin="440,140,100,25" Grid.Column="3" Grid.Row="1" Background="White"/>

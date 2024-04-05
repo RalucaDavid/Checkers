@@ -35,16 +35,16 @@ namespace Checkers.Model
                 }
             }
         }
-        private Tuple<int, int> coordinates;
-        public Tuple<int, int> Coordinates
+        private String imagePath;
+        public String ImagePath
         {
-            get { return coordinates; }
+            get { return imagePath; }
             set
             {
-                if (coordinates != value)
+                if (!string.IsNullOrEmpty(imagePath))
                 {
-                    coordinates = value;
-                    NotifyPropertyChanged(nameof(Coordinates));
+                    imagePath = value;
+                    NotifyPropertyChanged(nameof(ImagePath));
                 }
             }
         }
@@ -52,13 +52,13 @@ namespace Checkers.Model
         {
             color = ColorType.None;
             type = PieceType.None;
-            coordinates = Tuple.Create(-1, -1);
+            imagePath = "";
         }
-        public Piece(PieceType type, ColorType color, Tuple<int, int> coordinates)
+        public Piece(PieceType type, ColorType color, String imagePath)
         {
             this.type = type;
             this.color = color;
-            this.coordinates = coordinates;
+            this.imagePath = imagePath;
         }
         public event PropertyChangedEventHandler PropertyChanged;
         protected void NotifyPropertyChanged(string propertyName)

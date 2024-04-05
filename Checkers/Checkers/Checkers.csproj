@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <None Remove="View\Background.jpg" />
-    <None Remove="View\Board.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,7 +18,6 @@
 
   <ItemGroup>
     <Resource Include="View\Background.jpg" />
-    <Resource Include="View\Board.jpg" />
   </ItemGroup>
 
 </Project>
