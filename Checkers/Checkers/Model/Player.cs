@@ -22,6 +22,19 @@ namespace Checkers.Model
                 }
             }
         }
+        private int wonGames;
+        public int WonGames
+        {
+            get { return wonGames; }
+            set
+            {
+                if (wonGames != value)
+                {
+                    wonGames = value;
+                    NotifyPropertyChanged(nameof(WonGames));
+                }
+            }
+        }
         public Player(ColorType color)
         {
             this.color = color;
