@@ -23,7 +23,7 @@ namespace Checkers
         public MainWindow()
         {
             InitializeComponent();
-            this.Height = 720;
+            this.Height = 800;
             this.Width = 1100;
             MainFrame.Navigate(new Game(DataContext));
             MainFrame.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Hidden;

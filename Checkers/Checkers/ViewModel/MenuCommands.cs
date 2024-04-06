@@ -23,8 +23,36 @@ namespace Checkers.ViewModel
         public event PropertyChangedEventHandler PropertyChanged;
         public event MouseButtonEventHandler MouseDownOnBoard;
         private Game game;
-        private List<Tuple<int, int>> validMoves;
+        private List<Tuple<int, int>> validMoves = new List<Tuple<int, int>>();
         private Piece currentPiece;
+
+        private string _numberPiecesRed;
+        public string NumberPiecesRed
+        {
+            get { return _numberPiecesRed; }
+            set
+            {
+                if (_numberPiecesRed != value)
+                {
+                    _numberPiecesRed = value;
+                    OnPropertyChanged(nameof(NumberPiecesRed));
+                }
+            }
+        }
+
+        private string _numberPiecesWhite;
+        public string NumberPiecesWhite
+        {
+            get { return _numberPiecesWhite; }
+            set
+            {
+                if (_numberPiecesWhite != value)
+                {
+                    _numberPiecesWhite = value;
+                    OnPropertyChanged(nameof(NumberPiecesWhite));
+                }
+            }
+        }
         public Game Game
         {
             get { return game; }
@@ -52,11 +80,110 @@ namespace Checkers.ViewModel
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                MessageBox.Show("Sal");
+                Image clickedImage = sender as Image;
+                if (clickedImage != null)
+                {
+                    Piece clickedPiece = clickedImage.DataContext as Piece;
+                    if ((clickedPiece.Type != PieceType.None) && (clickedPiece.Color != ColorType.None))
+                    {
+                        currentPiece = clickedPiece;
+                        ClearValidMoves();
+                        validMoves.Clear();
+                        ValidMoves(clickedPiece.Coordonates.Item1, clickedPiece.Coordonates.Item2);
+                        if (validMoves.Count > 0)
+                        {
+                            ShowValidMoves();
+                            OnPropertyChanged("Game");
+
+                        }
+                    }
+                }
             }
-            if(e.RightButton == MouseButtonState.Pressed)
+            if (e.RightButton == MouseButtonState.Pressed)
             {
-                MessageBox.Show("cf");
+                Image clickedImage = sender as Image;
+                if (clickedImage != null)
+                {
+                    string basePath = AppDomain.CurrentDomain.BaseDirectory;
+                    string directoryPath = Path.GetFullPath(Path.Combine(basePath, "..\\..\\..\\Resources\\Images"));
+                    Piece clickedPiece = clickedImage.DataContext as Piece;
+                    if (clickedPiece.Type == PieceType.None && clickedPiece.ImagePath == Path.Combine(directoryPath, $"PossibleMove.png"))
+                    {
+                        ClearValidMoves();
+                        validMoves.Clear();
+                        if (clickedPiece.Coordonates.Item1 == 7 || clickedPiece.Coordonates.Item1 == 0 && currentPiece.Type == PieceType.Simple)
+                        {
+                            currentPiece.Type = PieceType.King;
+                            if (currentPiece.Color == ColorType.Red)
+                            {
+                                currentPiece.ImagePath = Path.Combine(directoryPath, $"PieceRedKing.png");
+                            }
+                            if (currentPiece.Color == ColorType.White)
+                            {
+                                currentPiece.ImagePath = Path.Combine(directoryPath, $"PieceWhiteKing.png");
+                            }
+                        }
+                        if (Math.Abs(currentPiece.Coordonates.Item1 - clickedPiece.Coordonates.Item1) == 2)
+                        {
+                            if (currentPiece.Coordonates.Item1 < clickedPiece.Coordonates.Item1 && currentPiece.Coordonates.Item2 < clickedPiece.Coordonates.Item2)
+                            {
+                                game.Board.Pieces[currentPiece.Coordonates.Item1 + 1][currentPiece.Coordonates.Item2 + 1] =
+                                    new Piece(PieceType.None, ColorType.None, Path.Combine(directoryPath, $"BlackSquare.png"), Tuple.Create(currentPiece.Coordonates.Item1 + 1, currentPiece.Coordonates.Item2 + 1));
+                            }
+                            if (currentPiece.Coordonates.Item1 < clickedPiece.Coordonates.Item1 && currentPiece.Coordonates.Item2 > clickedPiece.Coordonates.Item2)
+                            {
+                                game.Board.Pieces[currentPiece.Coordonates.Item1 + 1][currentPiece.Coordonates.Item2 - 1] =
+                                    new Piece(PieceType.None, ColorType.None, Path.Combine(directoryPath, $"BlackSquare.png"), Tuple.Create(currentPiece.Coordonates.Item1 + 1, currentPiece.Coordonates.Item2 - 1));
+                            }
+                            if (currentPiece.Coordonates.Item1 > clickedPiece.Coordonates.Item1 && currentPiece.Coordonates.Item2 < clickedPiece.Coordonates.Item2)
+                            {
+                                game.Board.Pieces[currentPiece.Coordonates.Item1 - 1][currentPiece.Coordonates.Item2 + 1] =
+                                    new Piece(PieceType.None, ColorType.None, Path.Combine(directoryPath, $"BlackSquare.png"), Tuple.Create(currentPiece.Coordonates.Item1 - 1, currentPiece.Coordonates.Item2 + 1));
+                            }
+                            if (currentPiece.Coordonates.Item1 > clickedPiece.Coordonates.Item1 && currentPiece.Coordonates.Item2 > clickedPiece.Coordonates.Item2)
+                            {
+                                game.Board.Pieces[currentPiece.Coordonates.Item1 - 1][currentPiece.Coordonates.Item2 - 1] =
+                                    new Piece(PieceType.None, ColorType.None, Path.Combine(directoryPath, $"BlackSquare.png"), Tuple.Create(currentPiece.Coordonates.Item1 - 1, currentPiece.Coordonates.Item2 - 1));
+                            }
+                        }
+                        game.Board.Pieces[currentPiece.Coordonates.Item1][currentPiece.Coordonates.Item2] =
+                            new Piece(PieceType.None, ColorType.None, Path.Combine(directoryPath, $"BlackSquare.png"), Tuple.Create(currentPiece.Coordonates.Item1, currentPiece.Coordonates.Item2));
+                        game.Board.Pieces[clickedPiece.Coordonates.Item1][clickedPiece.Coordonates.Item2] =
+                            new Piece(currentPiece.Type, currentPiece.Color, currentPiece.ImagePath, Tuple.Create(clickedPiece.Coordonates.Item1, clickedPiece.Coordonates.Item2));
+                    }
+                }
+                CountPieces();
+                if (NumberPiecesRed == "0")
+                {
+                    MessageBox.Show("White won the game!");
+                }
+                if (NumberPiecesWhite == "0")
+                {
+                    MessageBox.Show("Red won the game!");
+                }
+            }
+        }
+        private void CountPieces()
+        {
+            NumberPiecesRed = game.Board.Pieces.SelectMany(x => x).Count(x => x.Color == ColorType.Red).ToString();
+            NumberPiecesWhite = game.Board.Pieces.SelectMany(x => x).Count(x => x.Color == ColorType.White).ToString();
+        }
+        private void ShowValidMoves()
+        {
+            string basePath = AppDomain.CurrentDomain.BaseDirectory;
+            string directoryPath = Path.GetFullPath(Path.Combine(basePath, "..\\..\\..\\Resources\\Images"));
+            foreach (var move in validMoves)
+            {
+                game.Board.Pieces[move.Item1][move.Item2].ImagePath = Path.Combine(directoryPath, $"PossibleMove.png");
+            }
+        }
+        private void ClearValidMoves()
+        {
+            string basePath = AppDomain.CurrentDomain.BaseDirectory;
+            string directoryPath = Path.GetFullPath(Path.Combine(basePath, "..\\..\\..\\Resources\\Images"));
+            foreach (var move in validMoves)
+            {
+                game.Board.Pieces[move.Item1][move.Item2].ImagePath = Path.Combine(directoryPath, $"BlackSquare.png");
             }
         }
         private void OnPropertyChanged(string propertyName)
@@ -68,36 +195,37 @@ namespace Checkers.ViewModel
         }
         public void InitializeBoard()
         {
-            for(int col=0;col<8;col++)
+            for (int row = 0; row < 8; row++)
             {
-                ObservableCollection<Piece> colPices = new ObservableCollection<Piece>();
-                for(int row=0;row<8;row++)
+                ObservableCollection<Piece> rowPices = new ObservableCollection<Piece>();
+                for (int col = 0; col < 8; col++)
                 {
                     Piece piece;
-                    if (((row==0)||(row==2))&&(col%2==1))
+                    if (((row == 0) || (row == 2)) && (col % 2 == 1))
                     {
-                        piece = new Piece(PieceType.Simple,ColorType.White, GetImagePath(PieceType.Simple,ColorType.White,row,col));
+                        piece = new Piece(PieceType.Simple, ColorType.White, GetImagePath(PieceType.Simple, ColorType.White, col, row), Tuple.Create(row, col));
                     }
-                    else if((row==1)&&(col%2==0))
+                    else if ((row == 1) && (col % 2 == 0))
                     {
-                        piece = new Piece(PieceType.Simple, ColorType.White, GetImagePath(PieceType.Simple, ColorType.White,row,col));
+                        piece = new Piece(PieceType.Simple, ColorType.White, GetImagePath(PieceType.Simple, ColorType.White, col, row), Tuple.Create(row, col));
                     }
-                    else if(((row==5)||(row==7))&&(col%2==0))
+                    else if (((row == 5) || (row == 7)) && (col % 2 == 0))
                     {
-                        piece = new Piece(PieceType.Simple, ColorType.Red, GetImagePath(PieceType.Simple, ColorType.Red, row, col));
+                        piece = new Piece(PieceType.Simple, ColorType.Red, GetImagePath(PieceType.Simple, ColorType.Red, col, row), Tuple.Create(row, col));
                     }
-                    else if((row==6)&&(col%2==1))
+                    else if ((row == 6) && (col % 2 == 1))
                     {
-                        piece = new Piece(PieceType.Simple, ColorType.Red, GetImagePath(PieceType.Simple, ColorType.Red,row,col));
+                        piece = new Piece(PieceType.Simple, ColorType.Red, GetImagePath(PieceType.Simple, ColorType.Red, col, row), Tuple.Create(row, col));
                     }
                     else
                     {
-                        piece = new Piece(PieceType.None, ColorType.None, GetImagePath(PieceType.None, ColorType.None, row, col));
+                        piece = new Piece(PieceType.None, ColorType.None, GetImagePath(PieceType.None, ColorType.None, col, row), Tuple.Create(row, col));
                     }
-                    colPices.Add(piece);
+                    rowPices.Add(piece);
                 }
-                game.Board.Pieces.Add(colPices);
+                game.Board.Pieces.Add(rowPices);
             }
+            CountPieces();
             OnPropertyChanged("Game");
         }
         public void CheckersNewGame(object parameter)
@@ -105,28 +233,97 @@ namespace Checkers.ViewModel
             game = new Game();
             InitializeBoard();
         }
-        public Piece FindPieceByCoordonates(int row, int column)
+        public void ValidMoves(int row, int column)
         {
-            return null;
-        }
-        public List<Tuple<int,int>> ValidMoves(int row, int column)
-        {
-            List < Tuple<int, int> > possibleMoves = new List<Tuple<int, int>>();
-            if(FindPieceByCoordonates(row+1,column-1)==null)
+            Debug.WriteLine(row.ToString());
+            Debug.WriteLine(column.ToString());
+            if (column < 0 && column > 7)
             {
-                possibleMoves.Add(Tuple.Create(row + 1, column - 1));
+                return;
             }
-            if (FindPieceByCoordonates(row+1,column+1)==null)
+            if (game.Board.Pieces[row][column].Type == PieceType.King || game.Board.Pieces[row][column].Color == ColorType.White)
             {
-                possibleMoves.Add(Tuple.Create(row + 1, column + 1));
+                if (row > -1 && row < 7)
+                {
+                    if (column > 0)
+                    {
+                        if (game.Board.Pieces[row + 1][column - 1].Type == PieceType.None)
+                        {
+                            validMoves.Add(Tuple.Create(row + 1, column - 1));
+                        }
+                        if (game.Board.Pieces[row + 1][column - 1].Type != PieceType.None && (game.Board.Pieces[row + 1][column - 1].Color == ColorType.Red
+                            || (game.Board.Pieces[row][column].Type == PieceType.King && game.Board.Pieces[row + 1][column - 1].Color == ColorType.White)))
+                        {
+                            if (row + 1 < 7 && column - 1 > 0)
+                            {
+                                if (game.Board.Pieces[row + 2][column - 2].Type == PieceType.None)
+                                {
+                                    validMoves.Add(Tuple.Create(row + 2, column - 2));
+                                }
+                            }
+                        }
+                    }
+                    if (column < 7)
+                    {
+                        if (game.Board.Pieces[row + 1][column + 1].Type == PieceType.None)
+                        {
+                            validMoves.Add(Tuple.Create(row + 1, column + 1));
+                        }
+                        if (game.Board.Pieces[row + 1][column + 1].Type != PieceType.None && (game.Board.Pieces[row + 1][column + 1].Color == ColorType.Red
+                            || (game.Board.Pieces[row][column].Type == PieceType.King && game.Board.Pieces[row + 1][column + 1].Color == ColorType.White)))
+                        {
+                            if (row + 1 < 7 && column + 1 < 7)
+                            {
+                                if (game.Board.Pieces[row + 2][column + 2].Type == PieceType.None)
+                                {
+                                    validMoves.Add(Tuple.Create(row + 2, column + 2));
+                                }
+                            }
+                        }
+                    }
+                }
             }
-            return possibleMoves;
-        }
-        private void ExecutePieceClicked(object parameter)
-        {
-            if (parameter is Piece piece)
+            if (game.Board.Pieces[row][column].Type == PieceType.King || game.Board.Pieces[row][column].Color == ColorType.Red)
             {
-                MessageBox.Show($"Piece clicked: {piece.Type}, Color: {piece.Color}");
+                if (row > 0 && row < 8)
+                {
+                    if (column > 0)
+                    {
+                        if (game.Board.Pieces[row - 1][column - 1].Type == PieceType.None)
+                        {
+                            validMoves.Add(Tuple.Create(row - 1, column - 1));
+                        }
+                        if (game.Board.Pieces[row - 1][column - 1].Type != PieceType.None && (game.Board.Pieces[row - 1][column - 1].Color == ColorType.White
+                            || (game.Board.Pieces[row][column].Type == PieceType.King && game.Board.Pieces[row - 1][column - 1].Color == ColorType.Red)))
+                        {
+                            if (row - 1 > 0 && column - 1 > 0)
+                            {
+                                if (game.Board.Pieces[row - 2][column - 2].Type == PieceType.None)
+                                {
+                                    validMoves.Add(Tuple.Create(row - 2, column - 2));
+                                }
+                            }
+                        }
+                    }
+                    if (column < 7)
+                    {
+                        if (game.Board.Pieces[row - 1][column + 1].Type == PieceType.None)
+                        {
+                            validMoves.Add(Tuple.Create(row - 1, column + 1));
+                        }
+                        if (game.Board.Pieces[row - 1][column + 1].Type != PieceType.None && (game.Board.Pieces[row - 1][column + 1].Color == ColorType.White
+                            || (game.Board.Pieces[row][column].Type == PieceType.King && game.Board.Pieces[row - 1][column + 1].Color == ColorType.Red)))
+                        {
+                            if (row - 1 > 0 && column + 1 < 7)
+                            {
+                                if (game.Board.Pieces[row - 2][column + 2].Type == PieceType.None)
+                                {
+                                    validMoves.Add(Tuple.Create(row - 2, column + 2));
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
         private string GetImagePath(PieceType type, ColorType color, int row, int col)
@@ -135,7 +332,7 @@ namespace Checkers.ViewModel
             string directoryPath = Path.GetFullPath(Path.Combine(basePath, "..\\..\\..\\Resources\\Images"));
             if ((color == ColorType.None) && (type == PieceType.None))
             {
-                if(col%2==row%2)
+                if (col % 2 == row % 2)
                     return Path.Combine(directoryPath, $"WhiteSquare.png");
                 return Path.Combine(directoryPath, $"BlackSquare.png");
             }

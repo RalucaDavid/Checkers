@@ -7,15 +7,17 @@
       mc:Ignorable="d" 
       Title="Game">
 
-    <Grid Width="1100" Height = "720">
+    <Grid Width="1100" Height = "800">
         <Grid.Background>
             <ImageBrush ImageSource="/View/Background.jpg"/>
         </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
             <RowDefinition Height="200"></RowDefinition>
             <RowDefinition Height="200"></RowDefinition>
             <RowDefinition Height="200"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -42,7 +44,13 @@
                 <MenuItem Header="About" Command="{Binding Path=About}"></MenuItem>
             </MenuItem>
         </Menu>
-        <Grid x:Name="BoardGrid" MouseDown="BoardGrid_MouseDown" RenderTransformOrigin="4.5,6.25" Grid.ColumnSpan="3" Margin="60,60,360,0" Grid.RowSpan="3" Grid.Column="1" Grid.Row="1">
+        <Grid x:Name="BoardGrid" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="3" Margin="60,60,360,0" Grid.RowSpan="3" Grid.Column="1" Grid.Row="2">
+            <Grid.RenderTransform>
+                <TransformGroup>
+                    <RotateTransform Angle="90"/>
+                    <ScaleTransform ScaleX="-1"/>
+                </TransformGroup>
+            </Grid.RenderTransform>
             <ItemsControl ItemsSource="{Binding Game.Board.Pieces}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -54,11 +62,16 @@
                         <ItemsControl ItemsSource="{Binding}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <UniformGrid Columns="1" Rows="1"/>
+                                    <UniformGrid Rows="1" Columns="1"/>
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
+                                    <DataTemplate.Resources>
+                                        <Style TargetType="Image">
+                                            <EventSetter Event="MouseDown" Handler="PieceImage_MouseDown"/>
+                                        </Style>
+                                    </DataTemplate.Resources>
                                     <Image Source="{Binding ImagePath}" Width="85" Height="85"/>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
@@ -67,11 +80,12 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </Grid>
-        <Label x:Name="Round" Content="{Binding Round}" FontSize="30" RenderTransformOrigin="3,3.5" Margin="440,60,40,90" Grid.Column="3" Grid.Row="1" Background="White"/>
-        <Label Content="Remaining Red Pieces:" FontSize="18" RenderTransformOrigin="3,3.5" Margin="440,140,100,25" Grid.Column="3" Grid.Row="1" Background="White"/>
-        <Label Content="Remaining White Pieces:" FontSize="18" RenderTransformOrigin="3,3.5" Margin="440,0,85,165" Grid.Column="3" Grid.Row="2" Background="White"/>
-        <Label Content="{Binding NumberPiecesRed}" FontSize="18" RenderTransformOrigin="3,3.5" Margin="660,140,40,25" Grid.Column="3" Grid.Row="1" Background="White"/>
-        <Label Content="{Binding NumberPiecesWhite}" FontSize="18" RenderTransformOrigin="3,3.5" Margin="660,0,40,165" Grid.Column="3" Grid.Row="2" Background="White"/>
+
+        <Label x:Name="Round" Content="{Binding Round}" FontSize="30" RenderTransformOrigin="3,3.5" Margin="440,60,40,90" Grid.Column="3" Grid.Row="2" Background="White"/>
+        <Label Content="Remaining Red Pieces:" FontSize="18" RenderTransformOrigin="3,3.5" Margin="440,140,100,25" Grid.Column="3" Grid.Row="2" Background="White"/>
+        <Label Content="Remaining White Pieces:" FontSize="18" RenderTransformOrigin="3,3.5" Margin="440,0,85,165" Grid.Column="3" Grid.Row="3" Background="White"/>
+        <Label Content="{Binding NumberPiecesRed}" FontSize="18" RenderTransformOrigin="3,3.5" Margin="660,140,40,25" Grid.Column="3" Grid.Row="2" Background="White"/>
+        <Label Content="{Binding NumberPiecesWhite}" FontSize="18" RenderTransformOrigin="3,3.5" Margin="660,0,40,165" Grid.Column="3" Grid.Row="3" Background="White"/>
 
     </Grid>
 </Page>

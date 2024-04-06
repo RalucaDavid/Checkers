@@ -26,7 +26,7 @@ namespace Checkers.View
             InitializeComponent();
             DataContext = dContext;
         }
-        private void BoardGrid_MouseDown(object sender, MouseButtonEventArgs e)
+        private void PieceImage_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (DataContext is MenuCommands menuCommands)
             {

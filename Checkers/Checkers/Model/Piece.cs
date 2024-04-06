@@ -48,17 +48,33 @@ namespace Checkers.Model
                 }
             }
         }
+
+        private Tuple<int, int> coordonates;
+        public Tuple<int, int> Coordonates
+        {
+            get { return coordonates; }
+            set
+            {
+                if (coordonates != value)
+                {
+                    coordonates = value;
+                    NotifyPropertyChanged(nameof(Coordonates));
+                }
+            }
+        }
         public Piece()
         {
             color = ColorType.None;
             type = PieceType.None;
             imagePath = "";
+            coordonates = Tuple.Create(-1, -1);
         }
-        public Piece(PieceType type, ColorType color, String imagePath)
+        public Piece(PieceType type, ColorType color, String imagePath, Tuple<int,int> coordonates)
         {
             this.type = type;
             this.color = color;
             this.imagePath = imagePath;
+            this.coordonates = coordonates;
         }
         public event PropertyChangedEventHandler PropertyChanged;
         protected void NotifyPropertyChanged(string propertyName)
