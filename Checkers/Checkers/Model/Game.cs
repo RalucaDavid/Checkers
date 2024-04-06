@@ -53,8 +53,8 @@ namespace Checkers.Model
         public Game()
         {
             Board = new Board();
-            Player1 = new Player();
-            Player2 = new Player();
+            Player1 = new Player(ColorType.Red);
+            Player2 = new Player(ColorType.White);
         }
         public event PropertyChangedEventHandler PropertyChanged;
 

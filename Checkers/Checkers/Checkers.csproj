@@ -13,10 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Resources\Data\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Resource Include="View\Background.jpg" />
   </ItemGroup>
 

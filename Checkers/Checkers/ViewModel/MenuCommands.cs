@@ -23,32 +23,45 @@ namespace Checkers.ViewModel
         public event PropertyChangedEventHandler PropertyChanged;
         public event MouseButtonEventHandler MouseDownOnBoard;
         private Game game;
+        private Player currentPlayer;
         private List<Tuple<int, int>> validMoves = new List<Tuple<int, int>>();
         private Piece currentPiece;
-
-        private string _numberPiecesRed;
-        public string NumberPiecesRed
+        private string round;
+        public string Round
         {
-            get { return _numberPiecesRed; }
+            get { return round; }
             set
             {
-                if (_numberPiecesRed != value)
+                if (round != value)
                 {
-                    _numberPiecesRed = value;
+                    round = value;
+                    OnPropertyChanged(nameof(Round));
+                }
+            }
+        }
+        private string numberPiecesRed;
+        public string NumberPiecesRed
+        {
+            get { return numberPiecesRed; }
+            set
+            {
+                if (numberPiecesRed != value)
+                {
+                    numberPiecesRed = value;
                     OnPropertyChanged(nameof(NumberPiecesRed));
                 }
             }
         }
 
-        private string _numberPiecesWhite;
+        private string numberPiecesWhite;
         public string NumberPiecesWhite
         {
-            get { return _numberPiecesWhite; }
+            get { return numberPiecesWhite; }
             set
             {
-                if (_numberPiecesWhite != value)
+                if (numberPiecesWhite != value)
                 {
-                    _numberPiecesWhite = value;
+                    numberPiecesWhite = value;
                     OnPropertyChanged(nameof(NumberPiecesWhite));
                 }
             }
@@ -84,7 +97,7 @@ namespace Checkers.ViewModel
                 if (clickedImage != null)
                 {
                     Piece clickedPiece = clickedImage.DataContext as Piece;
-                    if ((clickedPiece.Type != PieceType.None) && (clickedPiece.Color != ColorType.None))
+                    if ((clickedPiece.Type != PieceType.None) && (clickedPiece.Color != ColorType.None) && (clickedPiece.Color == currentPlayer.Color))
                     {
                         currentPiece = clickedPiece;
                         ClearValidMoves();
@@ -94,7 +107,6 @@ namespace Checkers.ViewModel
                         {
                             ShowValidMoves();
                             OnPropertyChanged("Game");
-
                         }
                     }
                 }
@@ -150,16 +162,25 @@ namespace Checkers.ViewModel
                             new Piece(PieceType.None, ColorType.None, Path.Combine(directoryPath, $"BlackSquare.png"), Tuple.Create(currentPiece.Coordonates.Item1, currentPiece.Coordonates.Item2));
                         game.Board.Pieces[clickedPiece.Coordonates.Item1][clickedPiece.Coordonates.Item2] =
                             new Piece(currentPiece.Type, currentPiece.Color, currentPiece.ImagePath, Tuple.Create(clickedPiece.Coordonates.Item1, clickedPiece.Coordonates.Item2));
+                        if(currentPlayer.Color == ColorType.Red)
+                        {
+                            currentPlayer = game.Player2;
+                        }
+                        else
+                        {
+                            currentPlayer = game.Player1;
+                        }
                     }
                 }
+                Round = currentPlayer.Color.ToString() + " player's turn.";
                 CountPieces();
                 if (NumberPiecesRed == "0")
                 {
-                    MessageBox.Show("White won the game!");
+                    MessageBox.Show("White player won the game!");
                 }
-                if (NumberPiecesWhite == "0")
+                else if (NumberPiecesWhite == "0")
                 {
-                    MessageBox.Show("Red won the game!");
+                    MessageBox.Show("Red player won the game!");
                 }
             }
         }
@@ -226,17 +247,17 @@ namespace Checkers.ViewModel
                 game.Board.Pieces.Add(rowPices);
             }
             CountPieces();
+            Round = currentPlayer.Color.ToString() + " player's turn.";
             OnPropertyChanged("Game");
         }
         public void CheckersNewGame(object parameter)
         {
             game = new Game();
+            currentPlayer = game.Player1;
             InitializeBoard();
         }
         public void ValidMoves(int row, int column)
         {
-            Debug.WriteLine(row.ToString());
-            Debug.WriteLine(column.ToString());
             if (column < 0 && column > 7)
             {
                 return;
