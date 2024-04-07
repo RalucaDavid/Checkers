@@ -29,8 +29,8 @@
         <Menu Background="White" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5">
             <MenuItem Header="File">
                 <MenuItem Header="New Game" Command="{Binding Path=NewGame}"></MenuItem>
-                <MenuItem Header="Open Game" Command="{Binding Path=OpenGame}"></MenuItem>
-                <MenuItem Header="Save Game" Command="{Binding Path=SaveGame}"></MenuItem>
+                <MenuItem Header="Open Game" Command="{Binding Path=Open}"></MenuItem>
+                <MenuItem Header="Save Game" Command="{Binding Path=Save}"></MenuItem>
                 <MenuItem Header="Statistics" Command="{Binding Path=Statistics}"></MenuItem>
             </MenuItem>
             <MenuItem Header="Game Mods">

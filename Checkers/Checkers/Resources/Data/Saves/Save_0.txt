@@ -1,0 +1,619 @@
+{
+  "Pieces": [
+    [
+      {
+        "Type": 0,
+        "Color": 0,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\WhiteSquare.png",
+        "Coordonates": {
+          "Item1": 0,
+          "Item2": 0
+        }
+      },
+      {
+        "Type": 1,
+        "Color": 2,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\PieceWhiteSimple.png",
+        "Coordonates": {
+          "Item1": 0,
+          "Item2": 1
+        }
+      },
+      {
+        "Type": 0,
+        "Color": 0,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\WhiteSquare.png",
+        "Coordonates": {
+          "Item1": 0,
+          "Item2": 2
+        }
+      },
+      {
+        "Type": 1,
+        "Color": 2,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\PieceWhiteSimple.png",
+        "Coordonates": {
+          "Item1": 0,
+          "Item2": 3
+        }
+      },
+      {
+        "Type": 0,
+        "Color": 0,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\WhiteSquare.png",
+        "Coordonates": {
+          "Item1": 0,
+          "Item2": 4
+        }
+      },
+      {
+        "Type": 0,
+        "Color": 0,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\BlackSquare.png",
+        "Coordonates": {
+          "Item1": 0,
+          "Item2": 5
+        }
+      },
+      {
+        "Type": 0,
+        "Color": 0,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\WhiteSquare.png",
+        "Coordonates": {
+          "Item1": 0,
+          "Item2": 6
+        }
+      },
+      {
+        "Type": 1,
+        "Color": 2,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\PieceWhiteSimple.png",
+        "Coordonates": {
+          "Item1": 0,
+          "Item2": 7
+        }
+      }
+    ],
+    [
+      {
+        "Type": 1,
+        "Color": 2,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\PieceWhiteSimple.png",
+        "Coordonates": {
+          "Item1": 1,
+          "Item2": 0
+        }
+      },
+      {
+        "Type": 0,
+        "Color": 0,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\WhiteSquare.png",
+        "Coordonates": {
+          "Item1": 1,
+          "Item2": 1
+        }
+      },
+      {
+        "Type": 1,
+        "Color": 2,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\PieceWhiteSimple.png",
+        "Coordonates": {
+          "Item1": 1,
+          "Item2": 2
+        }
+      },
+      {
+        "Type": 0,
+        "Color": 0,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\WhiteSquare.png",
+        "Coordonates": {
+          "Item1": 1,
+          "Item2": 3
+        }
+      },
+      {
+        "Type": 1,
+        "Color": 2,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\PieceWhiteSimple.png",
+        "Coordonates": {
+          "Item1": 1,
+          "Item2": 4
+        }
+      },
+      {
+        "Type": 0,
+        "Color": 0,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\WhiteSquare.png",
+        "Coordonates": {
+          "Item1": 1,
+          "Item2": 5
+        }
+      },
+      {
+        "Type": 1,
+        "Color": 2,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\PieceWhiteSimple.png",
+        "Coordonates": {
+          "Item1": 1,
+          "Item2": 6
+        }
+      },
+      {
+        "Type": 0,
+        "Color": 0,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\WhiteSquare.png",
+        "Coordonates": {
+          "Item1": 1,
+          "Item2": 7
+        }
+      }
+    ],
+    [
+      {
+        "Type": 0,
+        "Color": 0,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\WhiteSquare.png",
+        "Coordonates": {
+          "Item1": 2,
+          "Item2": 0
+        }
+      },
+      {
+        "Type": 1,
+        "Color": 2,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\PieceWhiteSimple.png",
+        "Coordonates": {
+          "Item1": 2,
+          "Item2": 1
+        }
+      },
+      {
+        "Type": 0,
+        "Color": 0,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\WhiteSquare.png",
+        "Coordonates": {
+          "Item1": 2,
+          "Item2": 2
+        }
+      },
+      {
+        "Type": 0,
+        "Color": 0,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\BlackSquare.png",
+        "Coordonates": {
+          "Item1": 2,
+          "Item2": 3
+        }
+      },
+      {
+        "Type": 0,
+        "Color": 0,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\WhiteSquare.png",
+        "Coordonates": {
+          "Item1": 2,
+          "Item2": 4
+        }
+      },
+      {
+        "Type": 1,
+        "Color": 2,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\PieceWhiteSimple.png",
+        "Coordonates": {
+          "Item1": 2,
+          "Item2": 5
+        }
+      },
+      {
+        "Type": 0,
+        "Color": 0,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\WhiteSquare.png",
+        "Coordonates": {
+          "Item1": 2,
+          "Item2": 6
+        }
+      },
+      {
+        "Type": 1,
+        "Color": 2,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\PieceWhiteSimple.png",
+        "Coordonates": {
+          "Item1": 2,
+          "Item2": 7
+        }
+      }
+    ],
+    [
+      {
+        "Type": 0,
+        "Color": 0,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\BlackSquare.png",
+        "Coordonates": {
+          "Item1": 3,
+          "Item2": 0
+        }
+      },
+      {
+        "Type": 0,
+        "Color": 0,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\WhiteSquare.png",
+        "Coordonates": {
+          "Item1": 3,
+          "Item2": 1
+        }
+      },
+      {
+        "Type": 1,
+        "Color": 2,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\PieceWhiteSimple.png",
+        "Coordonates": {
+          "Item1": 3,
+          "Item2": 2
+        }
+      },
+      {
+        "Type": 0,
+        "Color": 0,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\WhiteSquare.png",
+        "Coordonates": {
+          "Item1": 3,
+          "Item2": 3
+        }
+      },
+      {
+        "Type": 1,
+        "Color": 2,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\PieceWhiteSimple.png",
+        "Coordonates": {
+          "Item1": 3,
+          "Item2": 4
+        }
+      },
+      {
+        "Type": 0,
+        "Color": 0,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\WhiteSquare.png",
+        "Coordonates": {
+          "Item1": 3,
+          "Item2": 5
+        }
+      },
+      {
+        "Type": 0,
+        "Color": 0,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\BlackSquare.png",
+        "Coordonates": {
+          "Item1": 3,
+          "Item2": 6
+        }
+      },
+      {
+        "Type": 0,
+        "Color": 0,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\WhiteSquare.png",
+        "Coordonates": {
+          "Item1": 3,
+          "Item2": 7
+        }
+      }
+    ],
+    [
+      {
+        "Type": 0,
+        "Color": 0,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\WhiteSquare.png",
+        "Coordonates": {
+          "Item1": 4,
+          "Item2": 0
+        }
+      },
+      {
+        "Type": 1,
+        "Color": 1,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\PieceRedSimple.png",
+        "Coordonates": {
+          "Item1": 4,
+          "Item2": 1
+        }
+      },
+      {
+        "Type": 0,
+        "Color": 0,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\WhiteSquare.png",
+        "Coordonates": {
+          "Item1": 4,
+          "Item2": 2
+        }
+      },
+      {
+        "Type": 1,
+        "Color": 1,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\PieceRedSimple.png",
+        "Coordonates": {
+          "Item1": 4,
+          "Item2": 3
+        }
+      },
+      {
+        "Type": 0,
+        "Color": 0,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\WhiteSquare.png",
+        "Coordonates": {
+          "Item1": 4,
+          "Item2": 4
+        }
+      },
+      {
+        "Type": 1,
+        "Color": 1,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\PieceRedSimple.png",
+        "Coordonates": {
+          "Item1": 4,
+          "Item2": 5
+        }
+      },
+      {
+        "Type": 0,
+        "Color": 0,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\WhiteSquare.png",
+        "Coordonates": {
+          "Item1": 4,
+          "Item2": 6
+        }
+      },
+      {
+        "Type": 0,
+        "Color": 0,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\BlackSquare.png",
+        "Coordonates": {
+          "Item1": 4,
+          "Item2": 7
+        }
+      }
+    ],
+    [
+      {
+        "Type": 1,
+        "Color": 1,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\PieceRedSimple.png",
+        "Coordonates": {
+          "Item1": 5,
+          "Item2": 0
+        }
+      },
+      {
+        "Type": 0,
+        "Color": 0,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\WhiteSquare.png",
+        "Coordonates": {
+          "Item1": 5,
+          "Item2": 1
+        }
+      },
+      {
+        "Type": 0,
+        "Color": 0,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\BlackSquare.png",
+        "Coordonates": {
+          "Item1": 5,
+          "Item2": 2
+        }
+      },
+      {
+        "Type": 0,
+        "Color": 0,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\WhiteSquare.png",
+        "Coordonates": {
+          "Item1": 5,
+          "Item2": 3
+        }
+      },
+      {
+        "Type": 0,
+        "Color": 0,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\BlackSquare.png",
+        "Coordonates": {
+          "Item1": 5,
+          "Item2": 4
+        }
+      },
+      {
+        "Type": 0,
+        "Color": 0,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\WhiteSquare.png",
+        "Coordonates": {
+          "Item1": 5,
+          "Item2": 5
+        }
+      },
+      {
+        "Type": 1,
+        "Color": 1,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\PieceRedSimple.png",
+        "Coordonates": {
+          "Item1": 5,
+          "Item2": 6
+        }
+      },
+      {
+        "Type": 0,
+        "Color": 0,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\WhiteSquare.png",
+        "Coordonates": {
+          "Item1": 5,
+          "Item2": 7
+        }
+      }
+    ],
+    [
+      {
+        "Type": 0,
+        "Color": 0,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\WhiteSquare.png",
+        "Coordonates": {
+          "Item1": 6,
+          "Item2": 0
+        }
+      },
+      {
+        "Type": 1,
+        "Color": 1,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\PieceRedSimple.png",
+        "Coordonates": {
+          "Item1": 6,
+          "Item2": 1
+        }
+      },
+      {
+        "Type": 0,
+        "Color": 0,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\WhiteSquare.png",
+        "Coordonates": {
+          "Item1": 6,
+          "Item2": 2
+        }
+      },
+      {
+        "Type": 1,
+        "Color": 1,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\PieceRedSimple.png",
+        "Coordonates": {
+          "Item1": 6,
+          "Item2": 3
+        }
+      },
+      {
+        "Type": 0,
+        "Color": 0,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\WhiteSquare.png",
+        "Coordonates": {
+          "Item1": 6,
+          "Item2": 4
+        }
+      },
+      {
+        "Type": 0,
+        "Color": 0,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\BlackSquare.png",
+        "Coordonates": {
+          "Item1": 6,
+          "Item2": 5
+        }
+      },
+      {
+        "Type": 0,
+        "Color": 0,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\WhiteSquare.png",
+        "Coordonates": {
+          "Item1": 6,
+          "Item2": 6
+        }
+      },
+      {
+        "Type": 1,
+        "Color": 1,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\PieceRedSimple.png",
+        "Coordonates": {
+          "Item1": 6,
+          "Item2": 7
+        }
+      }
+    ],
+    [
+      {
+        "Type": 1,
+        "Color": 1,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\PieceRedSimple.png",
+        "Coordonates": {
+          "Item1": 7,
+          "Item2": 0
+        }
+      },
+      {
+        "Type": 0,
+        "Color": 0,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\WhiteSquare.png",
+        "Coordonates": {
+          "Item1": 7,
+          "Item2": 1
+        }
+      },
+      {
+        "Type": 1,
+        "Color": 1,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\PieceRedSimple.png",
+        "Coordonates": {
+          "Item1": 7,
+          "Item2": 2
+        }
+      },
+      {
+        "Type": 0,
+        "Color": 0,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\WhiteSquare.png",
+        "Coordonates": {
+          "Item1": 7,
+          "Item2": 3
+        }
+      },
+      {
+        "Type": 1,
+        "Color": 1,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\PieceRedSimple.png",
+        "Coordonates": {
+          "Item1": 7,
+          "Item2": 4
+        }
+      },
+      {
+        "Type": 0,
+        "Color": 0,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\WhiteSquare.png",
+        "Coordonates": {
+          "Item1": 7,
+          "Item2": 5
+        }
+      },
+      {
+        "Type": 1,
+        "Color": 1,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\PieceRedSimple.png",
+        "Coordonates": {
+          "Item1": 7,
+          "Item2": 6
+        }
+      },
+      {
+        "Type": 0,
+        "Color": 0,
+        "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\WhiteSquare.png",
+        "Coordonates": {
+          "Item1": 7,
+          "Item2": 7
+        }
+      }
+    ]
+  ],
+  "Player1": {
+    "Color": 1
+  },
+  "Player2": {
+    "Color": 2
+  },
+  "currentPlayer": {
+    "Color": 1
+  },
+  "currentPiece": {
+    "Type": 1,
+    "Color": 2,
+    "ImagePath": "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Images\\PieceWhiteSimple.png",
+    "Coordonates": {
+      "Item1": 0,
+      "Item2": 5
+    }
+  },
+  "validMoves": [],
+  "allowMultipleMoves": true,
+  "kingPieces": false,
+  "fewPieces": false,
+  "capturatedPiece": false
+}

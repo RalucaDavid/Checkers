@@ -17,6 +17,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Xml.Linq;
+using Microsoft.Win32;
 
 namespace Checkers.ViewModel
 {
@@ -98,6 +99,8 @@ namespace Checkers.ViewModel
         private ICommand chooseMultipleJump;
         private ICommand chooseKingPieces;
         private ICommand chooseFewPieces;
+        private ICommand save;
+        private ICommand open;
         public MenuCommands()
         {
             ReadStatistics();
@@ -275,7 +278,7 @@ namespace Checkers.ViewModel
                 for (int col = 0; col < 8; col++)
                 {
                     Piece piece;
-                    if ((fewPieces == false) && ((row == 0) || (row == 2)) && (col % 2 == 1))
+                    if (((row == 0) || ((fewPieces == false) && (row == 2))) && (col % 2 == 1))
                     {
                         if (kingPieces)
                         {
@@ -286,7 +289,7 @@ namespace Checkers.ViewModel
                             piece = new Piece(PieceType.Simple, ColorType.White, GetImagePath(PieceType.Simple, ColorType.White, col, row), Tuple.Create(row, col));
                         }
                     }
-                    else if ((row == 1) && (col % 2 == 0))
+                    else if ((fewPieces == false) && (row == 1) && (col % 2 == 0))
                     {
                         if (kingPieces)
                         {
@@ -297,7 +300,7 @@ namespace Checkers.ViewModel
                             piece = new Piece(PieceType.Simple, ColorType.White, GetImagePath(PieceType.Simple, ColorType.White, col, row), Tuple.Create(row, col));
                         }
                     }
-                    else if ((fewPieces == false) && ((row == 5) || (row == 7)) && (col % 2 == 0))
+                    else if ((((fewPieces == false) && (row == 5)) || (row == 7)) && (col % 2 == 0))
                     {
                         if (kingPieces)
                         {
@@ -308,7 +311,7 @@ namespace Checkers.ViewModel
                             piece = new Piece(PieceType.Simple, ColorType.Red, GetImagePath(PieceType.Simple, ColorType.Red, col, row), Tuple.Create(row, col));
                         }
                     }
-                    else if ((row == 6) && (col % 2 == 1))
+                    else if ((fewPieces == false) && (row == 6) && (col % 2 == 1))
                     {
                         if (kingPieces)
                         {
@@ -428,7 +431,7 @@ namespace Checkers.ViewModel
                         {
                             if (row + 1 < 7 && column - 1 > 0)
                             {
-                                if (game.Board.Pieces[row + 2][column - 2].Type == PieceType.None)
+                                if (game.Board.Pieces[row + 2][column - 2].Type == PieceType.None && game.Board.Pieces[row][column].Color != game.Board.Pieces[row+1][column-1].Color)
                                 {
                                     validMoves.Add(Tuple.Create(row + 2, column - 2));
                                 }
@@ -442,7 +445,7 @@ namespace Checkers.ViewModel
                         {
                             if (row + 1 < 7 && column + 1 < 7)
                             {
-                                if (game.Board.Pieces[row + 2][column + 2].Type == PieceType.None)
+                                if (game.Board.Pieces[row + 2][column + 2].Type == PieceType.None && game.Board.Pieces[row][column].Color != game.Board.Pieces[row + 1][column +1].Color)
                                 {
                                     validMoves.Add(Tuple.Create(row + 2, column + 2));
                                 }
@@ -462,7 +465,7 @@ namespace Checkers.ViewModel
                         {
                             if (row - 1 > 0 && column - 1 > 0)
                             {
-                                if (game.Board.Pieces[row - 2][column - 2].Type == PieceType.None)
+                                if (game.Board.Pieces[row - 2][column - 2].Type == PieceType.None && game.Board.Pieces[row][column].Color != game.Board.Pieces[row - 1][column - 1].Color)
                                 {
                                     validMoves.Add(Tuple.Create(row - 2, column - 2));
                                 }
@@ -476,7 +479,7 @@ namespace Checkers.ViewModel
                         {
                             if (row - 1 > 0 && column + 1 < 7)
                             {
-                                if (game.Board.Pieces[row - 2][column + 2].Type == PieceType.None)
+                                if (game.Board.Pieces[row - 2][column + 2].Type == PieceType.None && game.Board.Pieces[row][column].Color != game.Board.Pieces[row - 1][column + 1].Color)
                                 {
                                     validMoves.Add(Tuple.Create(row - 2, column + 2));
                                 }
@@ -503,6 +506,81 @@ namespace Checkers.ViewModel
                 return Path.Combine(directoryPath, $"Piece{colorString}{typeString}.png");
             }
         }
+        public void SaveGame(object parameter)
+        {
+            string directoryPath = "..\\..\\..\\Resources\\Data\\Saves";
+            int numFiles = Directory.GetFiles(directoryPath, "*.txt").Length;
+            string fileName = $"Save_{numFiles}.txt";
+            string filePath = Path.Combine(directoryPath, fileName);
+            var json = new
+            {
+                game.Board.Pieces,
+                game.Player1,
+                game.Player2,
+                currentPlayer,
+                currentPiece,
+                validMoves,
+                allowMultipleMoves,
+                kingPieces,
+                fewPieces,
+                capturatedPiece,
+            };
+            string jsonString = JsonSerializer.Serialize(json, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(filePath, jsonString);
+        }
+        public void OpenGame(object parameter)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.InitialDirectory = "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Data\\Saves\\";
+            if (openFileDialog.ShowDialog() == true)
+            {
+                string filePath = openFileDialog.FileName;
+                string fileContent = File.ReadAllText(filePath);
+                JsonDocument document = JsonDocument.Parse(fileContent);
+                game = new Game();
+                game.Board.Pieces = ConvertToObservableCollection(JsonSerializer.Deserialize<Piece[][]>(document.RootElement.GetProperty("Pieces").GetRawText()));
+                game.Player1 = JsonSerializer.Deserialize<Player>(document.RootElement.GetProperty("Player1").GetRawText());
+                game.Player2 = JsonSerializer.Deserialize<Player>(document.RootElement.GetProperty("Player2").GetRawText());
+                currentPlayer = JsonSerializer.Deserialize<Player>(document.RootElement.GetProperty("currentPlayer").GetRawText());
+                currentPiece = JsonSerializer.Deserialize<Piece>(document.RootElement.GetProperty("currentPiece").GetRawText());
+                validMoves = JsonSerializer.Deserialize<List<Tuple<int, int>>>(document.RootElement.GetProperty("validMoves").GetRawText());
+                allowMultipleMoves = document.RootElement.GetProperty("allowMultipleMoves").GetBoolean();
+                kingPieces = document.RootElement.GetProperty("kingPieces").GetBoolean();
+                fewPieces = document.RootElement.GetProperty("fewPieces").GetBoolean();
+                capturatedPiece = document.RootElement.GetProperty("capturatedPiece").GetBoolean();
+                CountPieces();
+                Round = currentPlayer.Color.ToString() + " player's turn.";
+                OnPropertyChanged("Game");
+            }
+        }
+        private ObservableCollection<ObservableCollection<Piece> > ConvertToObservableCollection(Piece[][] pieces)
+        {
+            if (pieces == null)
+            {
+                return new ObservableCollection<ObservableCollection<Piece>>();
+            }
+            ObservableCollection<ObservableCollection<Piece>> observableCollection = new ObservableCollection<ObservableCollection<Piece>>();
+            foreach (Piece[] row in pieces)
+            {
+                if (row == null)
+                {
+                    continue;
+                }
+
+                ObservableCollection<Piece> rowCollection = new ObservableCollection<Piece>();
+                foreach (Piece piece in row)
+                {
+                    if (piece == null)
+                    {
+                        continue;
+                    }
+                    rowCollection.Add(piece);
+                }
+                observableCollection.Add(rowCollection);
+            }
+            return observableCollection;
+        }
+
         public ICommand Statistics
         {
             get
@@ -565,6 +643,24 @@ namespace Checkers.ViewModel
                 if (newGame == null)
                     newGame = new RelayCommand(CheckersNewGame);
                 return newGame;
+            }
+        }
+        public ICommand Save
+        {
+            get
+            {
+                if (save == null)
+                    save = new RelayCommand(SaveGame);
+                return save;
+            }
+        }
+        public ICommand Open
+        {
+            get
+            {
+                if (open == null)
+                    open = new RelayCommand(OpenGame);
+                return open;
             }
         }
         public void ShowAbout(object parameter)

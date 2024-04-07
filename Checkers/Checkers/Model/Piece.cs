@@ -41,7 +41,7 @@ namespace Checkers.Model
             get { return imagePath; }
             set
             {
-                if (!string.IsNullOrEmpty(imagePath))
+                if (imagePath != value)
                 {
                     imagePath = value;
                     NotifyPropertyChanged(nameof(ImagePath));
