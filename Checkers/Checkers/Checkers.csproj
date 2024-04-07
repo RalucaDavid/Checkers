@@ -9,7 +9,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Images\Background.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Resources\Data\Saves\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Images\Background.jpg" />
   </ItemGroup>
 
 </Project>

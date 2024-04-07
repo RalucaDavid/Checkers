@@ -531,7 +531,9 @@ namespace Checkers.ViewModel
         public void OpenGame(object parameter)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.InitialDirectory = "C:\\Users\\Raluca David\\source\\repos\\Checkers\\Checkers\\Checkers\\Resources\\Data\\Saves\\";
+            string basePath = AppDomain.CurrentDomain.BaseDirectory;
+            string directoryPath = Path.GetFullPath(Path.Combine(basePath, "..\\..\\..\\Resources\\Data\\Saves"));
+            openFileDialog.InitialDirectory = directoryPath;
             if (openFileDialog.ShowDialog() == true)
             {
                 string filePath = openFileDialog.FileName;
