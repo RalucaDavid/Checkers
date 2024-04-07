@@ -1,0 +1,5 @@
+{
+  "redWonGames": 6,
+  "whiteWonGames": 9,
+  "maxPiecesBoard": 10
+}

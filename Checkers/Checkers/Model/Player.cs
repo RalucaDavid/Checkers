@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Checkers.Model
@@ -19,19 +21,6 @@ namespace Checkers.Model
                 {
                     color = value;
                     NotifyPropertyChanged(nameof(Color));
-                }
-            }
-        }
-        private int wonGames;
-        public int WonGames
-        {
-            get { return wonGames; }
-            set
-            {
-                if (wonGames != value)
-                {
-                    wonGames = value;
-                    NotifyPropertyChanged(nameof(WonGames));
                 }
             }
         }

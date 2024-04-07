@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Text.Json;
 using System.Data.Common;
 using System.Diagnostics;
 using System.IO;
@@ -15,18 +16,22 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using System.Xml.Linq;
 
 namespace Checkers.ViewModel
 {
     class MenuCommands : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+
+        // Play game
         public event MouseButtonEventHandler MouseDownOnBoard;
         private Game game;
         private Player currentPlayer;
         private List<Tuple<int, int>> validMoves = new List<Tuple<int, int>>();
         private Piece currentPiece;
-        private bool allowMultipleMoves;
+        private bool allowMultipleMoves, kingPieces, fewPieces;
+        private bool capturatedPiece = false;
         private string round;
         public string Round
         {
@@ -53,7 +58,6 @@ namespace Checkers.ViewModel
                 }
             }
         }
-
         private string numberPiecesWhite;
         public string NumberPiecesWhite
         {
@@ -80,21 +84,27 @@ namespace Checkers.ViewModel
                 }
             }
         }
+
+        // Statistics
+        int redWonGames, whiteWonGames, maxPiecesBoard, totalPieces;
+
+        //Commands
         private ICommand newGame;
         private ICommand closeGame;
         private ICommand saveGame;
         private ICommand openGame;
         private ICommand showStatistics;
         private ICommand about;
-        private ICommand exit;
         private ICommand chooseMultipleJump;
+        private ICommand chooseKingPieces;
+        private ICommand chooseFewPieces;
         public MenuCommands()
         {
-            /*empty*/
+            ReadStatistics();
         }
         public void OnMouseDownOnBoard(object sender, MouseButtonEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed)
+            if (e.LeftButton == MouseButtonState.Pressed && capturatedPiece == false)
             {
                 Image clickedImage = sender as Image;
                 if (clickedImage != null)
@@ -160,18 +170,32 @@ namespace Checkers.ViewModel
                                 game.Board.Pieces[currentPiece.Coordonates.Item1 - 1][currentPiece.Coordonates.Item2 - 1] =
                                     new Piece(PieceType.None, ColorType.None, Path.Combine(directoryPath, $"BlackSquare.png"), Tuple.Create(currentPiece.Coordonates.Item1 - 1, currentPiece.Coordonates.Item2 - 1));
                             }
+                            capturatedPiece = true;
                         }
                         game.Board.Pieces[currentPiece.Coordonates.Item1][currentPiece.Coordonates.Item2] =
                             new Piece(PieceType.None, ColorType.None, Path.Combine(directoryPath, $"BlackSquare.png"), Tuple.Create(currentPiece.Coordonates.Item1, currentPiece.Coordonates.Item2));
                         game.Board.Pieces[clickedPiece.Coordonates.Item1][clickedPiece.Coordonates.Item2] =
                             new Piece(currentPiece.Type, currentPiece.Color, currentPiece.ImagePath, Tuple.Create(clickedPiece.Coordonates.Item1, clickedPiece.Coordonates.Item2));
+                        if ((allowMultipleMoves) && (capturatedPiece))
+                        {
+                            currentPiece = game.Board.Pieces[clickedPiece.Coordonates.Item1][clickedPiece.Coordonates.Item2];
+                            ValidMovesCaptureOpponent(currentPiece.Coordonates.Item1, currentPiece.Coordonates.Item2);
+                            if (validMoves.Count > 0)
+                            {
+                                ShowValidMoves();
+                                OnPropertyChanged("Game");
+                                return;
+                            }
+                        }
                         if (currentPlayer.Color == ColorType.Red)
                         {
                             currentPlayer = game.Player2;
+                            capturatedPiece = false;
                         }
                         else
                         {
                             currentPlayer = game.Player1;
+                            capturatedPiece = false;
                         }
                     }
                 }
@@ -179,11 +203,13 @@ namespace Checkers.ViewModel
                 CountPieces();
                 if (NumberPiecesRed == "0")
                 {
+                    redWonGames++;
                     SaveStatistics();
                     MessageBox.Show("White player won the game!");
                 }
                 else if (NumberPiecesWhite == "0")
                 {
+                    whiteWonGames++;
                     SaveStatistics();
                     MessageBox.Show("Red player won the game!");
                 }
@@ -191,12 +217,30 @@ namespace Checkers.ViewModel
         }
         private void SaveStatistics()
         {
-
+            if (totalPieces > maxPiecesBoard)
+                maxPiecesBoard = totalPieces;
+            var json = new
+            {
+                redWonGames,
+                whiteWonGames,
+                maxPiecesBoard
+            };
+            string jsonString = JsonSerializer.Serialize(json, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText("..\\..\\..\\Resources\\Data\\Statistics.txt", jsonString);
+        }
+        private void ReadStatistics()
+        {
+            string fileContent = File.ReadAllText("..\\..\\..\\Resources\\Data\\Statistics.txt");
+            JsonDocument document = JsonDocument.Parse(fileContent);
+            redWonGames = document.RootElement.GetProperty("redWonGames").GetInt32();
+            whiteWonGames = document.RootElement.GetProperty("whiteWonGames").GetInt32();
+            maxPiecesBoard = document.RootElement.GetProperty("maxPiecesBoard").GetInt32();
         }
         private void CountPieces()
         {
             NumberPiecesRed = game.Board.Pieces.SelectMany(x => x).Count(x => x.Color == ColorType.Red).ToString();
             NumberPiecesWhite = game.Board.Pieces.SelectMany(x => x).Count(x => x.Color == ColorType.White).ToString();
+            totalPieces = game.Board.Pieces.SelectMany(x => x).Count(x => x.Color == ColorType.White || x.Color == ColorType.Red);
         }
         private void ShowValidMoves()
         {
@@ -231,21 +275,49 @@ namespace Checkers.ViewModel
                 for (int col = 0; col < 8; col++)
                 {
                     Piece piece;
-                    if (((row == 0) || (row == 2)) && (col % 2 == 1))
+                    if ((fewPieces == false) && ((row == 0) || (row == 2)) && (col % 2 == 1))
                     {
-                        piece = new Piece(PieceType.Simple, ColorType.White, GetImagePath(PieceType.Simple, ColorType.White, col, row), Tuple.Create(row, col));
+                        if (kingPieces)
+                        {
+                            piece = new Piece(PieceType.King, ColorType.White, GetImagePath(PieceType.King, ColorType.White, col, row), Tuple.Create(row, col));
+                        }
+                        else
+                        {
+                            piece = new Piece(PieceType.Simple, ColorType.White, GetImagePath(PieceType.Simple, ColorType.White, col, row), Tuple.Create(row, col));
+                        }
                     }
                     else if ((row == 1) && (col % 2 == 0))
                     {
-                        piece = new Piece(PieceType.Simple, ColorType.White, GetImagePath(PieceType.Simple, ColorType.White, col, row), Tuple.Create(row, col));
+                        if (kingPieces)
+                        {
+                            piece = new Piece(PieceType.King, ColorType.White, GetImagePath(PieceType.King, ColorType.White, col, row), Tuple.Create(row, col));
+                        }
+                        else
+                        {
+                            piece = new Piece(PieceType.Simple, ColorType.White, GetImagePath(PieceType.Simple, ColorType.White, col, row), Tuple.Create(row, col));
+                        }
                     }
-                    else if (((row == 5) || (row == 7)) && (col % 2 == 0))
+                    else if ((fewPieces == false) && ((row == 5) || (row == 7)) && (col % 2 == 0))
                     {
-                        piece = new Piece(PieceType.Simple, ColorType.Red, GetImagePath(PieceType.Simple, ColorType.Red, col, row), Tuple.Create(row, col));
+                        if (kingPieces)
+                        {
+                            piece = new Piece(PieceType.King, ColorType.Red, GetImagePath(PieceType.King, ColorType.Red, col, row), Tuple.Create(row, col));
+                        }
+                        else
+                        {
+                            piece = new Piece(PieceType.Simple, ColorType.Red, GetImagePath(PieceType.Simple, ColorType.Red, col, row), Tuple.Create(row, col));
+                        }
                     }
                     else if ((row == 6) && (col % 2 == 1))
                     {
-                        piece = new Piece(PieceType.Simple, ColorType.Red, GetImagePath(PieceType.Simple, ColorType.Red, col, row), Tuple.Create(row, col));
+                        if (kingPieces)
+                        {
+                            piece = new Piece(PieceType.King, ColorType.Red, GetImagePath(PieceType.King, ColorType.Red, col, row), Tuple.Create(row, col));
+                        }
+                        else
+                        {
+                            piece = new Piece(PieceType.Simple, ColorType.Red, GetImagePath(PieceType.Simple, ColorType.Red, col, row), Tuple.Create(row, col));
+                        }
                     }
                     else
                     {
@@ -264,6 +336,8 @@ namespace Checkers.ViewModel
             game = new Game();
             currentPlayer = game.Player1;
             allowMultipleMoves = false;
+            kingPieces = false;
+            fewPieces = false;
             InitializeBoard();
         }
         public void CheckersNewGameMultipleJump(object parameter)
@@ -271,6 +345,26 @@ namespace Checkers.ViewModel
             game = new Game();
             currentPlayer = game.Player1;
             allowMultipleMoves = true;
+            kingPieces = false;
+            fewPieces = false;
+            InitializeBoard();
+        }
+        public void CheckersNewGameKingPieces(object parameter)
+        {
+            game = new Game();
+            currentPlayer = game.Player1;
+            allowMultipleMoves = false;
+            kingPieces = true;
+            fewPieces = false;
+            InitializeBoard();
+        }
+        public void CheckersNewGameFewPieces(object parameter)
+        {
+            game = new Game();
+            currentPlayer = game.Player1;
+            allowMultipleMoves = false;
+            kingPieces = false;
+            fewPieces = true;
             InitializeBoard();
         }
         public void ValidMoves(int row, int column)
@@ -319,7 +413,7 @@ namespace Checkers.ViewModel
                     }
                 }
             }
-            ValidMovesCaptureOpponent(row,column);
+            ValidMovesCaptureOpponent(row, column);
         }
         private void ValidMovesCaptureOpponent(int row, int column)
         {
@@ -409,6 +503,17 @@ namespace Checkers.ViewModel
                 return Path.Combine(directoryPath, $"Piece{colorString}{typeString}.png");
             }
         }
+        public ICommand Statistics
+        {
+            get
+            {
+                if (showStatistics == null)
+                {
+                    showStatistics = new RelayCommand(ShowStatistics);
+                }
+                return showStatistics;
+            }
+        }
         public ICommand About
         {
             get
@@ -429,6 +534,28 @@ namespace Checkers.ViewModel
                     chooseMultipleJump = new RelayCommand(CheckersNewGameMultipleJump);
                 }
                 return chooseMultipleJump;
+            }
+        }
+        public ICommand ChooseKingPieces
+        {
+            get
+            {
+                if (chooseKingPieces == null)
+                {
+                    chooseKingPieces = new RelayCommand(CheckersNewGameKingPieces);
+                }
+                return chooseKingPieces;
+            }
+        }
+        public ICommand ChooseFewPieces
+        {
+            get
+            {
+                if (chooseFewPieces == null)
+                {
+                    chooseFewPieces = new RelayCommand(CheckersNewGameFewPieces);
+                }
+                return chooseFewPieces;
             }
         }
         public ICommand NewGame
@@ -455,6 +582,13 @@ namespace Checkers.ViewModel
                 "promoted to a \"king\", granting it the ability to move both forward and backward diagonally.\r\n\r\n" +
                 "Checkers involves strategy in the placement and movement of pieces, as well as anticipating the opponent's " +
                 "moves. It's a game that combines elements of strategic and tactical calculation, providing an engaging experience for players of all ages.");
+        }
+        public void ShowStatistics(object parameter)
+        {
+            string message = $"Number of games won by the red team: {redWonGames}\n" +
+                     $"Number of games won by the white team: {whiteWonGames}\n" +
+                     $"Maximum number of pieces remaining on the board: {maxPiecesBoard}";
+            MessageBox.Show(message);
         }
     }
 }
